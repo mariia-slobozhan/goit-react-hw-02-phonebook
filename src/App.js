@@ -1,5 +1,6 @@
 import "./App.css";
 import { Component } from "react";
+import { v4 as uuidv4 } from "uuid";
 import PhonebookForm from "./Components/PhonebookForm/PhonebookForm";
 import ContactList from "./Components/ContactsList/ContactsList";
 import Filter from "./Components/Filter/Filter";
@@ -22,7 +23,7 @@ export default class App extends Component {
         (el) => el.name.toLowerCase() === normalizedContact
       )
         ? alert(`${contact.name} is already in contact list`)
-        : { contacts: [...prevState.contacts, contact] };
+        : { contacts: [...prevState.contacts, { ...contact, id: uuidv4() }] };
     });
   };
 
@@ -37,11 +38,13 @@ export default class App extends Component {
     );
   };
 
-  deleteContact =(contactId) => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId)
-    }))
-  }
+  deleteContact = (contactId) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== contactId
+      ),
+    }));
+  };
 
   render() {
     const visiableContacts = this.getVisiableContacts();
@@ -54,7 +57,7 @@ export default class App extends Component {
         <PhonebookForm list={contacts} addNewContact={addNewContact} />
         <h2>Contacts</h2>
         <Filter value={this.state.filter} onChange={changeFilter} />
-        <ContactList items={visiableContacts} onDeleteContact={deleteContact}/>
+        <ContactList items={visiableContacts} onDeleteContact={deleteContact} />
       </div>
     );
   }

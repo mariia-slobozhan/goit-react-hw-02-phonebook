@@ -1,32 +1,38 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class PhonebookForm extends Component {
+  static propTypes = {
+    addNewContact: PropTypes.func,
+  };
+
   state = {
     name: "",
     number: "",
   };
 
   handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
-  handleSubmit =(e) => {
-      e.preventDefault()
-     
-      this.props.addNewContact(this.state)
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-      this.resetForm()
-  }
+    this.props.addNewContact(this.state);
+
+    this.resetForm();
+  };
 
   resetForm = () => {
-     this.setState({ name: "", number: ""})
-  }
+    this.setState({ name: "", number: "" });
+  };
 
   render() {
-    const {name, number} = this.state;
-    const{handleSubmit, handleChange,  }= this;
+    const { name, number } = this.state;
+    const { handleSubmit, handleChange } = this;
     return (
-      <form  onSubmit={handleSubmit}> 
+      <form onSubmit={handleSubmit}>
         <label>
           Name
           <input
@@ -51,7 +57,7 @@ export default class PhonebookForm extends Component {
             value={number}
           />
         </label>
-        <button type='submit'>Add contact</button>
+        <button type="submit">Add contact</button>
       </form>
     );
   }
