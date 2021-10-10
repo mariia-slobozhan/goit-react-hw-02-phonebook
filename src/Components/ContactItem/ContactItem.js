@@ -1,12 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import s from "./ContactItem.module.css";
 
 export default function ContactItem({ name, tel, id, onDeleteContact }) {
   return (
-    <li id={id}>
-      <span>{name}</span>
-      <span>{tel}</span>
-      <button onClick={() => onDeleteContact(id)} type="button">
+    <li className={s.item} id={id}>
+      <span className={s.name}>{name}</span>
+      <span className={s.tel}>{tel}</span>
+      <button
+        className={s.button}
+        onClick={() => onDeleteContact(id)}
+        type="button"
+      >
         Delete
       </button>
     </li>
